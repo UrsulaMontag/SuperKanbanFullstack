@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>um</groupId>
-    <artifactId>Java-Spring-Challenges</artifactId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Java-Spring-Challenges</name>
     <description>Java-Spring-Challenges</description>
