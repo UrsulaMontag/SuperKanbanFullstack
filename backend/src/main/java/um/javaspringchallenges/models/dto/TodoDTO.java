@@ -6,5 +6,5 @@ import um.javaspringchallenges.models.TodoStatus;
 
 @With
 @Document("todos")
-public record TodoDTO(String description, TodoStatus status) {
+public record TodoDTO(String description) {
 }

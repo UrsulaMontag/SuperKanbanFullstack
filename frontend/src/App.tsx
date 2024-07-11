@@ -4,10 +4,11 @@ import MainLayout from "./layouts/MainLayout.tsx";
 import Home from "./routes/Home.tsx";
 import TodoGallery from "./routes/TodoGallery.tsx";
 import {useEffect, useState} from "react";
-import {Todo} from "./models/Todo.ts";
+import {Todo, TodoToAdd} from "./models/Todo.ts";
 import axios from "axios";
 import TodoDetailCard from "./routes/TodoDetailCard.tsx";
 import EditTodo from "./routes/EditTodo.tsx";
+import CreateNewTodo from "./routes/CreateNewTodo.tsx";
 
 function App() {
     const [data, setData] = useState<Todo[]>([]);
@@ -26,6 +27,15 @@ function App() {
             })
             .then(fetchTodos)
             .catch(error => console.error('Error update todo', error))
+    }
+
+    const createTodo = (newTodo: TodoToAdd) => {
+        axios.post<Todo>("/api/todo", {description: newTodo.description})
+            .then(response => {
+                setData([...data, response.data])
+            })
+            .then(fetchTodos)
+            .catch(error => console.error('Error creating todo', error))
     }
 
 
@@ -58,6 +68,9 @@ function App() {
                 }, {
                     path: '/edit/:id',
                     element: <EditTodo editTodo={editTodo} todos={data}/>
+                },{
+                    path: '/create',
+                    element: <CreateNewTodo createNewTodo={createTodo} />
                 },
 
             ]
