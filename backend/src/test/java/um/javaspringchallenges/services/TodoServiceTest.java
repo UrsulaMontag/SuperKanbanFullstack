@@ -60,8 +60,8 @@ class TodoServiceTest {
 
     @Test
     void createTodo_createsANewTodo_withRandomIDAndStatusOpen() throws NullPointerException {
-        TodoDTO givenTodo = new TodoDTO("I am the first test todo", TodoStatus.OPEN);
-        Todo expected = new Todo("123", givenTodo.description(), givenTodo.status());
+        TodoDTO givenTodo = new TodoDTO("I am the first test todo");
+        Todo expected = new Todo("123", givenTodo.description(), TodoStatus.OPEN);
         when(mockUtilService.generateId()).thenReturn("123");
         when(mockTodoRepo.save(expected)).thenReturn(expected);
         todoService.createTodo(givenTodo);
