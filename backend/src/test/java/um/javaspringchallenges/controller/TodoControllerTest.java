@@ -10,7 +10,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import um.javaspringchallenges.exceptions.InvalidIdException;
 import um.javaspringchallenges.models.Todo;
 import um.javaspringchallenges.models.TodoStatus;
 import um.javaspringchallenges.repository.TodoRepo;
@@ -39,83 +38,66 @@ class TodoControllerTest {
     }
 
     @Test
-    void getAllTodos_returnsListOfExistingTodos() throws NullPointerException {
+    void getAllTodos_returnsListOfExistingTodos() throws Exception {
         todoRepo.saveAll(List.of(
                 (new Todo("1", "Test todo 1", TodoStatus.OPEN)),
                 (new Todo("2", "Test todo 2", TodoStatus.IN_PROGRESS)),
                 (new Todo("3", "Test todo 3", TodoStatus.IN_PROGRESS)),
                 (new Todo("4", "Test todo 4", TodoStatus.DONE))
         ));
-        try {
-            mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.content().json("""
-                                 [
-                                      {
-                                      "id": "1",
-                                      "description": "Test todo 1",
-                                      "status": "OPEN"
-                                      },
-                                      {
-                                      "id": "2",
-                                      "description": "Test todo 2",
-                                      "status": "IN_PROGRESS"
-                                      },
-                                      {
-                                      "id": "3",
-                                      "description": "Test todo 3",
-                                      "status": "IN_PROGRESS"
-                                      },
-                                      {
-                                      "id": "4",
-                                      "description": "Test todo 4",
-                                      "status": "DONE"
-                                      }
-                                 ]
-                            """));
-        } catch (NullPointerException e) {
-            throw new NullPointerException(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                             [
+                                  {
+                                  "id": "1",
+                                  "description": "Test todo 1",
+                                  "status": "OPEN"
+                                  },
+                                  {
+                                  "id": "2",
+                                  "description": "Test todo 2",
+                                  "status": "IN_PROGRESS"
+                                  },
+                                  {
+                                  "id": "3",
+                                  "description": "Test todo 3",
+                                  "status": "IN_PROGRESS"
+                                  },
+                                  {
+                                  "id": "4",
+                                  "description": "Test todo 4",
+                                  "status": "DONE"
+                                  }
+                             ]
+                        """));
+
     }
 
     @Test
-    void getTodoById_returnsSingleTodo_foundById() throws InvalidIdException {
+    void getTodoById_returnsSingleTodo_foundById() throws Exception {
         todoRepo.saveAll(List.of(
                 (new Todo("2", "Test todo 2", TodoStatus.IN_PROGRESS))
         ));
-        try {
-            mockMvc.perform(MockMvcRequestBuilders.get("/api/todo/2"))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.content().json("""
-                                      {
-                                      "id": "2",
-                                      "description": "Test todo 2",
-                                      "status": "IN_PROGRESS"
-                                      }
-                            """));
-        } catch (InvalidIdException e) {
-            throw new InvalidIdException(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo/2"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json("""
+                                  {
+                                  "id": "2",
+                                  "description": "Test todo 2",
+                                  "status": "IN_PROGRESS"
+                                  }
+                        """));
     }
 
     @Test
-    void createTodo_returnsNewCreatedTodo_withRandomID() throws NullPointerException {
+    void createTodo_returnsNewCreatedTodo_withRandomID() throws Exception {
         Todo testTodo = new Todo("123", "Test todo 1", TodoStatus.OPEN);
-        try {
-            mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(asJsonString(testTodo)))
-                    .andExpect(MockMvcResultMatchers.status().isCreated())
-                    .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
-        } catch (NullPointerException e) {
-            throw new NullPointerException(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/todo")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(testTodo)))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
     @Test
