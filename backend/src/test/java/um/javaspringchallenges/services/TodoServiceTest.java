@@ -3,7 +3,7 @@ package um.javaspringchallenges.services;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.annotation.DirtiesContext;
-import um.javaspringchallenges.exceptions.InvalidIDException;
+import um.javaspringchallenges.exceptions.InvalidIdException;
 import um.javaspringchallenges.models.Todo;
 import um.javaspringchallenges.models.TodoStatus;
 import um.javaspringchallenges.models.dto.TodoDTO;
@@ -41,18 +41,15 @@ class TodoServiceTest {
     }
 
     @Test
-    void getAllTodos_returnsListOfOpenTodos() throws NullPointerException {
+    void getAllTodos_returnsListOfOpenTodos() {
         when(mockTodoRepo.findAll()).thenReturn(testTodoList);
-        try {
-            todoService.getAllTodos();
-        } catch (NullPointerException e) {
-            throw new NullPointerException(e.getMessage());
-        }
+        todoService.getAllTodos();
+
         verify(mockTodoRepo).findAll();
     }
 
     @Test
-    void getTodoById_returnsSingleTodo_foundByGivenID() throws InvalidIDException {
+    void getTodoById_returnsSingleTodo_foundByGivenID() throws InvalidIdException {
         when(mockTodoRepo.findById("2")).thenReturn(Optional.of(testTodoList.get(1)));
         todoService.getTodoById("2");
         verify(mockTodoRepo).findById("2");
@@ -69,7 +66,7 @@ class TodoServiceTest {
     }
 
     @Test
-    void updateTodo_updatesExistingTodo_foundByGivenID() throws InvalidIDException {
+    void updateTodo_updatesExistingTodo_foundByGivenID() throws InvalidIdException {
         Todo updatedTodo = new Todo("2", "I am the first test todo and being updated", TodoStatus.OPEN);
         String updateId = "2";
         Todo expected = new Todo("2", updatedTodo.description(), updatedTodo.status());
@@ -80,7 +77,7 @@ class TodoServiceTest {
     }
 
     @Test
-    void deleteTodo_deletesExistingTodo_foundByGivenID() throws InvalidIDException {
+    void deleteTodo_deletesExistingTodo_foundByGivenID() throws InvalidIdException {
         String deleteId = "2";
         Todo deleted = (new Todo("2", "Test todo 2", TodoStatus.OPEN));
 

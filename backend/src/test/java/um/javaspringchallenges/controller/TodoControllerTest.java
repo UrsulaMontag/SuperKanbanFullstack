@@ -10,7 +10,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import um.javaspringchallenges.exceptions.InvalidIDException;
+import um.javaspringchallenges.exceptions.InvalidIdException;
 import um.javaspringchallenges.models.Todo;
 import um.javaspringchallenges.models.TodoStatus;
 import um.javaspringchallenges.repository.TodoRepo;
@@ -81,7 +81,7 @@ class TodoControllerTest {
     }
 
     @Test
-    void getTodoById_returnsSingleTodo_foundById() throws InvalidIDException {
+    void getTodoById_returnsSingleTodo_foundById() throws InvalidIdException {
         todoRepo.saveAll(List.of(
                 (new Todo("2", "Test todo 2", TodoStatus.IN_PROGRESS))
         ));
@@ -95,8 +95,8 @@ class TodoControllerTest {
                                       "status": "IN_PROGRESS"
                                       }
                             """));
-        } catch (InvalidIDException e) {
-            throw new InvalidIDException(e.getMessage());
+        } catch (InvalidIdException e) {
+            throw new InvalidIdException(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -126,7 +126,7 @@ class TodoControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + testTodo.id())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedTodo)))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
     }
 
