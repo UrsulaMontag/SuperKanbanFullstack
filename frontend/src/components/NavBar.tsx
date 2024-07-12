@@ -1,6 +1,5 @@
-import {Link} from 'react-router-dom';
 import {useState} from 'react';
-import {HamburgerMenu, NavContainer, NavList, NavItem} from '../styles/NavBar.styled';
+import {HamburgerMenu, NavContainer, NavList, NavItem, StyledLink} from '../styles/NavBar.styled';
 
 export default function NavBar() {
     const [showNav, setShowNav] = useState(false);
@@ -17,35 +16,25 @@ export default function NavBar() {
         <>
             <NavContainer>
                 <HamburgerMenu
-                    showNav={showNav}
-                    className={showNav ? 'active' : ''}
+                    $shownav={showNav}
                     onClick={toggleNav}
                 >
-                    <span className="hamburger-bar"></span>
-                    <span className="hamburger-bar"></span>
-                    <span className="hamburger-bar"></span>
-                    <span className="close-icon"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </HamburgerMenu>
-                <NavList showNav={showNav}>
+                <NavList $shownav={showNav}>
                     <NavItem>
-                        <Link to="/" onClick={handleLinkClick}>
-                            <p className="nav-link-text">Home</p>
-                        </Link>
+                        <StyledLink to="/" onClick={handleLinkClick}>Home</StyledLink>
                     </NavItem>
                     <NavItem>
-                        <Link to="/board/todo" onClick={handleLinkClick}>
-                            <p className="nav-link-text">Todo</p>
-                        </Link>
+                        <StyledLink to="/board/todo" onClick={handleLinkClick}>Todo</StyledLink>
                     </NavItem>
                     <NavItem>
-                        <Link to="/board/doing" onClick={handleLinkClick}>
-                            <p className="nav-link-text">Doing</p>
-                        </Link>
+                        <StyledLink to="/board/doing" onClick={handleLinkClick}>Doing</StyledLink>
                     </NavItem>
                     <NavItem>
-                        <Link to="/board/done" onClick={handleLinkClick}>
-                            <p className="nav-link-text">Done</p>
-                        </Link>
+                        <StyledLink to="/board/done" onClick={handleLinkClick}>Done</StyledLink>
                     </NavItem>
                 </NavList>
             </NavContainer>
