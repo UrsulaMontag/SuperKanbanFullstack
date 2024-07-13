@@ -1,15 +1,12 @@
 import {Todo} from "../models/Todo.ts";
 import {Params, useParams} from "react-router-dom";
 import TodoCard from "../components/TodoCard.tsx";
+import {useTodoContext} from "../contexts/TodoContext.tsx";
 
-type TodoDetailCardProps = {
-    todos: Todo[],
-}
-
-export default function TodoDetailCard(props: Readonly<TodoDetailCardProps>) {
-
+export default function TodoDetailCard() {
+    const {todos} = useTodoContext()
     const urlParams: Readonly<Params<string>> = useParams();
-    const currentTodo: Todo | undefined = props.todos.find(todo => todo.id === urlParams.id)
+    const currentTodo: Todo | undefined = todos.find(todo => todo.id === urlParams.id)
 
     return (
         <>

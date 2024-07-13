@@ -1,15 +1,14 @@
-import {TodoToAdd} from "../models/Todo.ts";
 import {ChangeEvent, FormEvent, useState} from "react";
+import {useTodoContext} from "../contexts/TodoContext.tsx";
 
-type CreateNewTodoProps = {
-    createNewTodo: (todo: TodoToAdd) => void;
-}
-export default function CreateNewTodo(props: Readonly<CreateNewTodoProps>) {
+
+export default function CreateNewTodo() {
+    const {createTodo} = useTodoContext();
     const [description, setDescription] = useState<string>("");
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        props.createNewTodo({ description: description});
+        createTodo({description: description});
         setDescription("");
     }
     return (<>
@@ -17,7 +16,7 @@ export default function CreateNewTodo(props: Readonly<CreateNewTodoProps>) {
                 <label>Todo Description:
                     <input type="text" value={description}
                            onChange={(event: ChangeEvent<HTMLInputElement>) => setDescription(event.target.value)}/></label>
-                <button>Edit</button>
+                <button>Create</button>
             </form>
 
         </>
