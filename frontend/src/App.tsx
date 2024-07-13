@@ -7,6 +7,7 @@ import TodoDetailCard from "./routes/TodoDetailCard.tsx";
 import EditTodo from "./routes/EditTodo.tsx";
 import CreateNewTodo from "./routes/CreateNewTodo.tsx";
 import {TodoProvider} from "./contexts/TodoContext.tsx";
+import GlobalStyle from "./styles/GlobalStyle.styled.ts";
 
 function App() {
     const router = createBrowserRouter([
@@ -44,6 +45,7 @@ function App() {
 
     return (
         <TodoProvider>
+            <GlobalStyle/>
             <RouterProvider router={router}/>
         </TodoProvider>
     )

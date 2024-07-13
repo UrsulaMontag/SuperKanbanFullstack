@@ -11,15 +11,12 @@ export default function CreateNewTodo() {
         createTodo({description: description});
         setDescription("");
     }
-    return (<>
-            <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleSubmit(event)}>
-                <label>Todo Description:
-                    <input type="text" value={description}
-                           onChange={(event: ChangeEvent<HTMLInputElement>) => setDescription(event.target.value)}/></label>
-                <button>Create</button>
-            </form>
-
-        </>
-
+    return (
+        <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleSubmit(event)}>
+            <label>Todo Description:
+                <input type="text" value={description}
+                       onChange={(event: ChangeEvent<HTMLInputElement>) => setDescription(event.target.value)}/></label>
+            <button>Create</button>
+        </form>
     )
 }

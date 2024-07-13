@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
+    position: sticky;
+    top: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: #282c34;
+    background-color: var(--color-dark);
     width: 100vw;
     margin-bottom: 3.6rem;
 

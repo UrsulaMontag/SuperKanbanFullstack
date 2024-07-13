@@ -1,5 +1,4 @@
 import styled, {css} from 'styled-components';
-import {Link} from "react-router-dom";
 
 export const NavContainer = styled.nav`
     display: flex;
@@ -39,18 +38,6 @@ export const NavList = styled.ul<{ $shownav: boolean }>`
 export const NavItem = styled.li`
     padding: 1rem;
 `;
-
-export const StyledLink = styled(Link)`
-    color: antiquewhite;
-    text-decoration: none;
-    cursor: pointer;
-    line-height: 3rem;
-
-    :hover {
-        color: aquamarine;
-        font-weight: 600;
-    }
-`
 
 export const HamburgerMenu = styled.div<{ $shownav: boolean }>`
     @media (min-width: 780px) {
