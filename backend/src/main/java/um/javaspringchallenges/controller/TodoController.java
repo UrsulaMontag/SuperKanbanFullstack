@@ -2,9 +2,8 @@ package um.javaspringchallenges.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import um.javaspringchallenges.exceptions.InvalidIDException;
+import um.javaspringchallenges.exceptions.InvalidIdException;
 import um.javaspringchallenges.models.Todo;
 import um.javaspringchallenges.models.dto.TodoDTO;
 import um.javaspringchallenges.services.TodoService;
@@ -18,29 +17,34 @@ public class TodoController {
 
     private final TodoService todoService;
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public ResponseEntity<List<Todo>> getAllTodos() throws NullPointerException {
-        return new ResponseEntity<>(todoService.getAllTodos(), HttpStatus.OK);
+    public List<Todo> getAllTodos() {
+        return todoService.getAllTodos();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable String id) throws InvalidIDException {
-        return new ResponseEntity<>(todoService.getTodoById(id), HttpStatus.OK);
+    public Todo getTodoById(@PathVariable String id) throws InvalidIdException {
+        return todoService.getTodoById(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<Todo> createTodo(@RequestBody TodoDTO todo) throws NullPointerException {
-        return new ResponseEntity<>(todoService.createTodo(todo), HttpStatus.CREATED);
+    public Todo createTodo(@RequestBody TodoDTO todo) {
+        return todoService.createTodo(todo);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable("id") String id, @RequestBody Todo todo) throws InvalidIDException {
-        return new ResponseEntity<>(todoService.updateTodo(id, todo), HttpStatus.OK);
+    public Todo updateTodo(@PathVariable("id") String id, @RequestBody Todo todo) throws InvalidIdException {
+        return todoService.updateTodo(id, todo);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTodo(@PathVariable("id") String id) throws InvalidIDException {
+    public String deleteTodo(@PathVariable("id") String id) throws InvalidIdException {
         todoService.deleteTodo(id);
-        return new ResponseEntity<>("Todo deleted successfully", HttpStatus.OK);
+        return "Todo deleted successfully";
     }
 }

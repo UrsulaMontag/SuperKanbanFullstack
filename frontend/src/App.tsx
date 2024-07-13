@@ -3,47 +3,12 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Home from "./routes/Home.tsx";
 import TodoGallery from "./routes/TodoGallery.tsx";
-import {useEffect, useState} from "react";
-import {Todo, TodoToAdd} from "./models/Todo.ts";
-import axios from "axios";
 import TodoDetailCard from "./routes/TodoDetailCard.tsx";
 import EditTodo from "./routes/EditTodo.tsx";
 import CreateNewTodo from "./routes/CreateNewTodo.tsx";
+import {TodoProvider} from "./contexts/TodoContext.tsx";
 
 function App() {
-    const [data, setData] = useState<Todo[]>([]);
-
-    const fetchTodos = () => {
-        axios.get<Todo[]>("/api/todo")
-            .then(response => {
-                setData(response.data)
-            })
-            .catch(error => console.error('Error fetching todos', error))
-    };
-    const editTodo = (todo: Todo) => {
-        axios.put<Todo>("/api/todo/" + todo.id, {...todo})
-            .then(response => {
-                setData([...data, response.data]);
-            })
-            .then(fetchTodos)
-            .catch(error => console.error('Error update todo', error))
-    }
-
-    const createTodo = (newTodo: TodoToAdd) => {
-        axios.post<Todo>("/api/todo", {description: newTodo.description})
-            .then(response => {
-                setData([...data, response.data])
-            })
-            .then(fetchTodos)
-            .catch(error => console.error('Error creating todo', error))
-    }
-
-
-    useEffect(() => {
-        fetchTodos()
-    }, []);
-
-
     const router = createBrowserRouter([
         {
             path: '/',
@@ -55,22 +20,22 @@ function App() {
                 },
                 {
                     path: '/board/todo',
-                    element: <TodoGallery todos={data} status="OPEN"/>
+                    element: <TodoGallery status="OPEN"/>
                 }, {
                     path: '/board/doing',
-                    element: <TodoGallery todos={data} status="IN_PROGRESS"/>
+                    element: <TodoGallery status="IN_PROGRESS"/>
                 }, {
                     path: '/board/done',
-                    element: <TodoGallery todos={data} status="DONE"/>
+                    element: <TodoGallery status="DONE"/>
                 }, {
                     path: '/details/:id',
-                    element: <TodoDetailCard todos={data}/>
+                    element: <TodoDetailCard/>
                 }, {
                     path: '/edit/:id',
-                    element: <EditTodo editTodo={editTodo} todos={data}/>
-                },{
+                    element: <EditTodo/>
+                }, {
                     path: '/create',
-                    element: <CreateNewTodo createNewTodo={createTodo} />
+                    element: <CreateNewTodo/>
                 },
 
             ]
@@ -78,9 +43,9 @@ function App() {
     ])
 
     return (
-        <>
+        <TodoProvider>
             <RouterProvider router={router}/>
-        </>
+        </TodoProvider>
     )
 }
 
