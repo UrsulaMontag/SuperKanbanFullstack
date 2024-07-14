@@ -1,7 +1,8 @@
 import {Todo} from "../models/Todo.ts";
 import {Params, useParams} from "react-router-dom";
 import TodoCard from "../components/TodoCard.tsx";
-import {useTodoContext} from "../contexts/TodoContext.tsx";
+
+import {useTodoContext} from "../hooks/useTodoContext.ts";
 
 export default function TodoDetailCard() {
     const {todos} = useTodoContext()

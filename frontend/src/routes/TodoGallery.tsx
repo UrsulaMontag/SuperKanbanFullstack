@@ -1,8 +1,8 @@
 import {Todo} from "../models/Todo.ts";
 import TodoCard from "../components/TodoCard.tsx";
 
-import {useTodoContext} from "../contexts/TodoContext.tsx";
 import {GalleryList, GalleryListItem} from "../styles/TodoGallery.styled.ts";
+import {useTodoContext} from "../hooks/useTodoContext.ts";
 
 type TodoGalleryProps = {
     status: string

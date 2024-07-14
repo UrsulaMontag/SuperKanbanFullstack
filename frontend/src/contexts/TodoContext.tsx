@@ -1,4 +1,4 @@
-import {createContext, FC, ReactNode, useContext, useEffect, useState} from "react";
+import {createContext, FC, ReactNode, useEffect, useState} from "react";
 import {Todo, TodoToAdd} from "../models/Todo.ts";
 import axios from "axios";
 
@@ -10,13 +10,7 @@ type TodoContextType = {
     createTodo: (newTodo: TodoToAdd) => void;
     deleteTodo: (id: string) => void;
 }
-const TodoContext = createContext<TodoContextType | undefined>(undefined);
-
-export const useTodoContext = () => {
-    const context = useContext(TodoContext);
-    if (!context) throw new Error("useTodoContext must be used within a TodoProvider");
-    return context;
-}
+export const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
 export const TodoProvider: FC<{ children: ReactNode }> = ({children}) => {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -42,13 +36,17 @@ export const TodoProvider: FC<{ children: ReactNode }> = ({children}) => {
         axios.post<Todo>('/api/todo', {description: newTodo.description})
             .then(response => {
                 setTodos(prevTodos => [...prevTodos, response.data]);
+                fetchTodos();
             })
             .catch(error => console.error('Error creating todo', error));
     };
 
     const deleteTodo = (id: string) => {
         axios.delete(`/api/todo/` + id)
-            .then(() => alert(`Deleted`))
+            .then(() => {
+                alert(`Deleted`);
+                fetchTodos();
+            })
             .catch(error => console.error('Error deleting todo', error))
     }
 

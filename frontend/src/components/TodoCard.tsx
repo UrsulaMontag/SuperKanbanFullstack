@@ -1,8 +1,8 @@
 import {Status, Todo} from "../models/Todo.ts";
 import {useNavigate} from "react-router-dom";
-import {useTodoContext} from "../contexts/TodoContext.tsx";
 import {useState} from "react";
 import {CardActionContainer, CardActionLink, CardContainer} from "../styles/TodoCard.styled.ts";
+import {useTodoContext} from "../hooks/useTodoContext.ts";
 
 type TodoCardProps = {
     todo: Todo,
