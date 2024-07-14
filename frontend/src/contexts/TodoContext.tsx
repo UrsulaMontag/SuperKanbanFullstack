@@ -1,6 +1,7 @@
 import {createContext, FC, ReactNode, useEffect, useState} from "react";
 import {Todo, TodoToAdd} from "../models/Todo.ts";
 import axios from "axios";
+import {useLoader} from "../hooks/useLoader.ts";
 
 
 type TodoContextType = {
@@ -14,12 +15,15 @@ export const TodoContext = createContext<TodoContextType | undefined>(undefined)
 
 export const TodoProvider: FC<{ children: ReactNode }> = ({children}) => {
     const [todos, setTodos] = useState<Todo[]>([]);
+    const {showLoader, hideLoader} = useLoader();
 
     const fetchTodos = () => {
         axios.get<Todo[]>('/api/todo')
             .then(response => {
+                showLoader("Please wait! Data is on the way...")
                 setTodos(response.data);
             })
+            .then(hideLoader)
             .catch(error => console.error('Error fetching todos', error));
     };
 
